@@ -1,0 +1,83 @@
+# {{PROJECT_NAME}} Agent
+
+This is a literature subscription and digital library system. The agent manages daily academic paper discovery, filtering, and email delivery.
+
+## Core rule
+
+Do not load all prompt files at once.
+
+For each task, read only:
+
+1. this AGENTS.md
+2. the task-specific prompt files in `00_prompts/`
+3. the minimum required registry files in `00_registry/`
+
+## Task routing
+
+### Daily Literature Search
+
+Read:
+
+- `00_prompts/daily_search.md`
+- `00_prompts/topic_queue.md`
+- `00_prompts/journal_filter.md`
+- `00_prompts/folder_routing.md`
+- `00_prompts/email_templates.md`
+- `00_prompts/file_and_registry_rules.md`
+
+### Email Reply / Download Selected Papers
+
+Read:
+
+- `00_prompts/reply_download.md`
+- `00_prompts/deep_read_report.md`
+- `00_prompts/file_and_registry_rules.md`
+- `00_registry/reviewed_candidates.md`
+- `00_registry/downloaded_papers.md`
+
+### Folder Approval Request
+
+Read:
+
+- `00_prompts/folder_routing.md`
+- `00_registry/pending_folder_approvals.md`
+
+## Configuration
+
+All per-project configuration lives in `00_registry/user_config.json`:
+
+```json
+{
+  "project_name": "{{PROJECT_NAME}}",
+  "project_tag": "{{PROJECT_TAG}}",
+  "research_domain": "{{RESEARCH_DOMAIN}}",
+  "topics": [
+    {
+      "folder_name": "01_{{TOPIC_SLUG}}",
+      "display_name": "{{TOPIC_NAME}}",
+      "subtopics": ["{{SUBTOPIC_1}}", "{{SUBTOPIC_2}}"]
+    }
+  ],
+  "search_keywords": ["{{KEYWORD_1}}", "{{KEYWORD_2}}"],
+  "journal_tiers": {
+    "tier_s": ["{{JOURNAL_S_1}}", "{{JOURNAL_S_2}}"],
+    "tier_a": ["{{JOURNAL_A_1}}", "{{JOURNAL_A_2}}"]
+  },
+  "email": {
+    "sender": "{{EMAIL_SENDER}}",
+    "recipient": "{{EMAIL_RECIPIENT}}",
+    "smtp_host": "{{SMTP_HOST}}",
+    "smtp_port": {{SMTP_PORT}},
+    "use_ssl": {{USE_SSL}}
+  },
+  "daily_paper_count": {{DAILY_PAPER_COUNT}}
+}
+```
+
+## Never do these without explicit user approval
+
+- Do not create a new top-level topic folder.
+- Do not delete downloaded PDFs.
+- Do not re-download a paper already listed in `00_registry/downloaded_papers.md`.
+- Do not summarize papers from memory. Always verify title, authors, venue, abstract, and PDF/source link.
+- Do not modify user_config.json without user confirmation.
